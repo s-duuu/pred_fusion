@@ -2,12 +2,16 @@
 
 This repository deals with a perception system of Autonomous Driving techniques. In particular, we focused on the object detection, tracking, sensor fusion, and trajectory prediction. We used YOLOv5, PointPillars for the object detection of Camera and LiDAR sensor, respectively. Overall pipeline is as following.
 
-![image](https://github.com/s-duuu/pred_fusion/assets/96241852/4fac99cd-24b7-418f-ab5a-65c4ec965663){: .align-center}
+<p align="center">
+    <img src="https://github.com/s-duuu/pred_fusion/assets/96241852/4fac99cd-24b7-418f-ab5a-65c4ec965663" align="center" width="80%">
+</p>
 
 ## System Prediction Result
-![image50](https://github.com/s-duuu/pred_fusion/assets/96241852/82540016-3868-4f8c-be07-0eb9b963657f)
 
-![image58](https://github.com/s-duuu/pred_fusion/assets/96241852/702726ad-bd41-4beb-9c14-1577e0575d26)
+<p align="center">
+    <img src="https://github.com/s-duuu/pred_fusion/assets/96241852/82540016-3868-4f8c-be07-0eb9b963657f" align="center" width="40%">
+    <img src="https://github.com/s-duuu/pred_fusion/assets/96241852/702726ad-bd41-4beb-9c14-1577e0575d26" align="center" width="40%">
+</p>
 
 Through ROS Rviz, the prediction output is as the videos above.
 
