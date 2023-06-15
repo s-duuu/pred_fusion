@@ -17,7 +17,7 @@ Through ROS Rviz, the prediction output is as the videos above.
 
 ## Prerequisite
 1. Tested in Ubuntu 20.04 (ROS Noetic) & NVIDIA GeForce RTX 3070
-2. Other necessary library is in the `requirments.txt`
+2. Other necessary library is in the `requirements.txt`
 
 ## Preparation
 ### 0. Clone this repository and move directory
