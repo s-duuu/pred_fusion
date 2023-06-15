@@ -1,0 +1,10 @@
+torch
+torchvision
+opencv-python
+opencv-contrib-python
+scipy
+numpy
+pyquaternion
+shapely
+filterpy
+scikit-image
