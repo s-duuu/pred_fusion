@@ -26,23 +26,28 @@ Clone this repository and move your current directory to here.
     cd path_to_your_ws
     git clone https://github.com/s-duuu/pred_fusion.git
     cd pred_fusion
+
+### 1. Install requirements
+Install modules in `requirements.txt`.
+
+    pip install -r requirements.txt
     
-### 1. Clone PointPillars
+### 2. Clone PointPillars
 Clone the [official repository of PointPillars](https://github.com/zhulf0804/PointPillars).
 
     git clone https://github.com/zhulf0804/PointPillars.git
 
-### 2. Clone OpenPCDet
+### 3. Clone OpenPCDet
 Clone the [official repository of OpenPCDet](https://github.com/open-mmlab/OpenPCDet).
 
     git clone https://github.com/open-mmlab/OpenPCDet.git
 
-### 3. Clone CRAT-Pred
+### 4. Clone CRAT-Pred
 Clone the [official repository of CRAT-Pred](https://github.com/schmidt-ju/crat-pred).
 
     git clone https://github.com/schmidt-ju/crat-pred.git
 
-### 4. Build package
+### 5. Build package
 Build the package in the your workspace.
 
     cd path_to_your_ws
