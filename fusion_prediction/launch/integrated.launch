@@ -1,0 +1,84 @@
+<launch>
+    
+    <!-- YOLO Detection configuration -->
+    <arg name="weights"                 default="/home/heven/pred_ws/src/pred_fusion/fusion_prediction/yolo.pt"/>
+    <arg name="data"                    default="/home/heven/pred_ws/src/pred_fusion/fusion_prediction/src/yolov5/data/coco128.yaml"/>
+    <arg name="confidence_threshold"    default="0.6"/>
+    <arg name="iou_threshold"           default="0.45"/>
+    <arg name="maximum_detections"      default="1000"/>
+    <arg name="device"                  default="0"/>
+    <arg name="agnostic_nms"            default="true"/>
+    <arg name="line_thickness"          default="3"/>
+    <arg name="dnn"                     default="true"/>
+    <arg name="half"                    default="false"/>
+    <arg name="inference_size_h"        default="640"/>
+    <arg name="inference_size_w"        default="640"/>
+    <arg name="view_image"              default="true"/>
+    <arg name="input_image_topic"       default="/carmaker_vds_client_node/image_raw/compressed"/>
+    <arg name="output_topic"            default="/yolov5/detections"/>
+    <arg name="publish_image"           default="true"/>
+    <arg name="output_image_topic"      default="/yolov5/image_out"/>
+
+    <!-- PointPillars configurations -->
+    <arg name="config_path"             default="/home/heven/pred_ws/src/pred_fusion/OpenPCDet/tools/cfgs/kitti_models/pointpillar.yaml"/>
+    <arg name="ckpt_path"               default="/home/heven/pred_ws/src/pred_fusion/fusion_prediction/pillars.pth"/>
+    <arg name="input_lidar_topic"       default="/pointcloud/os1_pc2"/>
+    <arg name="score_threshold"         default="0.6"/>
+
+    <!-- Fusion configurations -->
+    <arg name="fusion_iou_threshold"    default="0.2"/>
+
+    <!-- Tracker configurations -->
+    <arg name="tracker_iou_threshold"   default="0.1"/>
+
+    <!-- Predictor configurations -->
+    <arg name="crat_pred_path"          default="/home/heven/pred_ws/src/pred_fusion/fusion_prediction/crat.ckpt"/>
+    <arg name="sensor_direction"        default="rear"/>
+
+    <node pkg="fusion_prediction" name="detector" type="detector.py" output="screen">
+        <param name="weights"               value="$(arg weights)"/>
+        <param name="data"                  value="$(arg data)"/>
+        <param name="confidence_threshold"  value="$(arg confidence_threshold)"/>
+        <param name="iou_threshold"         value="$(arg iou_threshold)" />
+        <param name="maximum_detections"    value="$(arg maximum_detections)"/>
+        <param name="device"                value="$(arg device)" />
+        <param name="agnostic_nms"          value="$(arg agnostic_nms)" />
+        <param name="line_thickness"        value="$(arg line_thickness)"/>
+        <param name="dnn"                   value="$(arg dnn)"/>
+        <param name="half"                  value="$(arg half)"/>
+
+        <param name="inference_size_h"      value="$(arg inference_size_h)"/>
+        <param name="inference_size_w"      value="$(arg inference_size_w)"/>
+
+        <param name="input_image_topic"     value="$(arg input_image_topic)"/>
+        <param name="output_topic"          value="$(arg output_topic)"/>
+
+        <param name="view_image"            value="$(arg view_image)"/>
+
+        <param name="publish_image"         value="$(arg publish_image)"/>
+        <param name="output_image_topic"    value="$(arg output_image_topic)"/>
+    </node>
+
+    <node pkg="fusion_prediction" name="pillar_node" type="pillars_detect.py" output="screen">
+        <param name="config_path"           value="$(arg config_path)"/>
+        <param name="ckpt_path"             value="$(arg ckpt_path)"/>
+        <param name="input_lidar_topic"     value="$(arg input_lidar_topic)"/>
+        <param name="score_threshold"       value="$(arg score_threshold)"/>
+    </node>
+
+    <node pkg="fusion_prediction" name="fusion_node" type="fusion.py" output="screen">
+        <param name="fusion_iou_threshold"  value="$(arg fusion_iou_threshold)"/>
+    </node>
+    
+    <node pkg="rviz" name="rviz" type="rviz" args="-d $(find fusion_prediction)/launch/fusion_display.rviz" />
+    
+    <node pkg="fusion_prediction" name="tracker_node" type="lidar_tracker.py" output="screen">
+        <param name="tracker_iou_threshold" value="$(arg tracker_iou_threshold)"/>
+    </node>
+
+    <node pkg="fusion_prediction" name="prediction_node" type="predict.py" output="screen">
+        <param name="sensor_direction"      value="$(arg sensor_direction)"/>
+        <param name="crat_pred_path"        value="$(arg crat_pred_path)"/>
+    </node>
+
+</launch>
